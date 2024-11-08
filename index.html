@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Family Horrors</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Rolagem de Dados</h1>
+        
+        <!-- Formulário para dados personalizados -->
+        <form id="rolagemdedados">
+            <h2>Entrada de Dados Personalizados</h2>
+            <input type="text" id="numDados" aria-label="Número de dados" placeholder="Digite o número de dados">
+            <input type="text" id="numFaces" aria-label="Número de faces" placeholder="Digite o número de faces">
+            <input type="text" id="numModificador" aria-label="Modificador" placeholder="Digite o Modificador">
+            <input type="submit" id="submit" value="Rolar">
+        </form>
+        
+        <!-- Formulário para dados predefinidos -->
+        <h2>Rolagem de Dados Predefinidos</h2>
+        <form id="rolagemPredefinida">
+            <label for="dadoPredefinido">Escolha o tipo de dado:</label>
+            <select id="dadoPredefinido">
+                <option value="6">Dado de 6 faces</option>
+                <option value="10">Dado de 10 faces</option>
+                <option value="20">Dado de 20 faces</option>
+            </select>
+            
+            <input type="number" id="quantidadePredefinido" aria-label="Quantidade de dados predefinidos" placeholder="Digite a quantidade" min="1">
+            
+            <input type="text" id="modificadorPredefinido" aria-label="Modificador predefinido" placeholder="Digite o Modificador">
+            
+            <input type="submit" value="Rolar Dados Predefinidos">
+        </form>
+        
+        <!-- Área onde os resultados são exibidos -->
+        <div id="resultados"></div>
+
+        <!-- Histórico de resultados -->
+        <h3>Histórico de Rolagens</h3>
+        <table id="historico" class="historico">
+            <thead>
+                <tr>
+                    <th>Tipo de Rolagem</th>
+                    <th>Resultado(s)</th>
+                    <th>Modificador</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Histórico será inserido aqui -->
+            </tbody>
+        </table>
+        
+        <!-- Botão para limpar histórico -->
+        <button id="limparHistorico">Limpar Histórico</button>
+        <br>
+        <footer>2024 - Family Horrors Todos os direitos reservados</footer>    
+    </div>
+
+    <script>
+        const formDados = document.getElementById('rolagemdedados');
+        const formPredefinido = document.getElementById('rolagemPredefinida');
+        const resultContainer = document.getElementById('resultados');
+        const historicoTable = document.getElementById('historico').getElementsByTagName('tbody')[0];
+        const limparHistoricoBtn = document.getElementById('limparHistorico');
+
+        let historicoRolagens = [];
+
+        function limparResultados() {
+            resultContainer.innerHTML = '';
+        }
+
+        function exibirHistorico() {
+            historicoTable.innerHTML = '';
+
+            historicoRolagens.forEach((rolagem) => {
+                const row = historicoTable.insertRow();
+                row.insertCell(0).innerText = rolagem.tipo;
+                row.insertCell(1).innerText = rolagem.resultados.join(', ');
+                row.insertCell(2).innerText = rolagem.modificador;
+            });
+        }
+
+        formDados.addEventListener('submit', function(event){
+            limparResultados();
+            event.preventDefault();
+            const dados = parseInt(formDados.numDados.value) || 1;
+            const faces = parseInt(formDados.numFaces.value) || 6;
+            const modificador = parseInt(formDados.numModificador.value) || 0;
+            rolarDados(dados, faces, modificador);
+        });
+
+        formPredefinido.addEventListener('submit', function(event){
+            event.preventDefault();
+            limparResultados();
+            const quantidade = parseInt(formPredefinido.quantidadePredefinido.value) || 1;
+            const faces = parseInt(formPredefinido.dadoPredefinido.value);
+            const modificador = parseInt(formPredefinido.modificadorPredefinido.value) || 0;
+            rolarDadosPredefinidos(quantidade, faces, modificador);
+        });
+
+        // dados personalizados
+        function rolarDados(dados, faces, modificador) {
+            let resultados = [];
+            for (let i = 0; i < dados; i++) {
+                const result = Math.floor(Math.random() * faces) + 1 + modificador;
+                resultados.push(`${i + 1}° Dado: ${result}`);
+            }
+            resultContainer.innerHTML = resultados.join('<br>');
+            historicoRolagens.push({
+                tipo: 'Rolagem Personalizada',
+                resultados: resultados,
+                modificador: modificador
+            });
+            exibirHistorico();
+        }
+
+        // dados predefinidos
+        function rolarDadosPredefinidos(quantidade, faces, modificador) {
+            let resultados = [];
+            for (let i = 0; i < quantidade; i++) {
+                const result = Math.floor(Math.random() * faces) + 1 + modificador;
+                resultados.push(`${i + 1}° Dado: ${result}`);
+            }
+            resultContainer.innerHTML = resultados.join('<br>');
+            historicoRolagens.push({
+                tipo: 'Rolagem Predefinida',
+                resultados: resultados,
+                modificador: modificador
+            });
+            exibirHistorico();
+        }
+
+        // Limpar o histórico
+        limparHistoricoBtn.addEventListener('click', function() {
+            historicoRolagens = [];
+            exibirHistorico();
+        });
+    </script>
+</body>
+</html>

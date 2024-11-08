@@ -1,0 +1,94 @@
+/* Estilo geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #030D2B;
+    padding: 20px;
+    color: #ffffff;
+}
+
+h1, h2, h3 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+input[type="text"],
+input[type="number"],
+select,
+input[type="submit"] {
+    margin: 5px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    max-width: 300px;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+}
+
+#resultados {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+/* Estilo para o histórico */
+table.historico {
+    margin-top: 20px;
+    width: 100%;
+    max-width: 800px;
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    color: #fff;
+    background-color: #1e293b;
+}
+
+table.historico th, table.historico td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+table.historico th {
+    background-color: #4CAF50;
+}
+
+button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #ff6347;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
